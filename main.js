@@ -1,62 +1,80 @@
-let playerScore = 0;
-let compScore = 0;
+const selections = ['rock', 'paper', 'scissors']
+const playerScore = document.querySelector('.playerScoreDisplay')
+const computerScore = document.querySelector('.computerScoreDisplay')
+let score = 0
+let compScore = 0
 
-function getScore(playerScore, compScore){
-    if (playerScore > compScore){
-        console.log(`player1 wins by ${playerScore} to ${compScore}`)
-    } else if (playerScore < compScore){
-        console.log(`computer wins by ${compScore} to ${playerScore}`)
-    } else {
-        console.log('its a draw')
+function game() {
+    const selectionButtons = document.querySelectorAll('.choiceButtons').forEach(selectionButton => {
+        selectionButton.addEventListener('click', (e) => {
+            const selection = e.target.id 
+            const compGuess = getRandomGuess()
+            const outcome = getResult(selection, compGuess)
+            console.log(selection)
+            console.log(outcome)
+        })
+    })
+
+}
+const selectionButtons = document.querySelectorAll('.choiceButtons').forEach(selectionButton => {
+    selectionButton.addEventListener('click', (e) => {
+        const selection = e.target.id 
+        const compGuess = getRandomGuess()
+        const outcome = getResult(selection, compGuess)
+        playerScore.innerHTML = `PlayerScore: ${score}`
+        computerScore.innerHTML = `ComputerScore: ${compScore}`
+        console.log(selection)
+        console.log(outcome)
+    })
+})
+
+
+function getRandomGuess () {
+    let result = ''
+    const guess = Math.floor(Math.random() * selections.length)
+    switch (guess){
+        case 0:
+            result = 'rock'
+            console.log('rock')
+            break
+        case 1:
+            result = 'paper'
+            console.log('paper')
+            break
+        case 2:
+            result = 'scissors'
+            console.log('scissors')
+            break
+    }
+    return result;
+}
+function getResult (selection, compGuess){
+    if(selection === compGuess){
+        return 'Its a Draw'
+    }
+    if(selection === "rock" && compGuess === "scissors"){
+        score += 1
+        return `you win ${selection} beats ${compGuess}`
+    }
+    if(selection === "paper" && compGuess === "rock"){
+        score += 1
+        return `you win ${selection} beats ${compGuess}`
+    }
+    if(selection === "scissors" && compGuess === "paper"){
+        score += 1
+        return `you win ${selection} beats ${compGuess}`
+    }
+    if(selection === "rock" && compGuess === "paper"){
+        compScore += 1
+        return `you lose ${compGuess} beats ${selection}`
+    }
+    if(selection === "scissors" && compGuess === "rock"){
+        compScore += 1
+        return `you lose ${compGuess} beats ${selection}`
+    }
+    if(selection === "paper" && compGuess === "scissors"){
+        compScore += 1
+        return `you lose ${compGuess} beats ${selection}`
     }
 }
 
-function game(){
-    for (let i = 0; i < 5; i++){
-        const playerSelection = String(prompt('Pease select rock, paper or scissors').toLowerCase())
-        const computerSelection = getCompChoice();
-        console.log(playRound(playerSelection, computerSelection))
-    }
-    getScore(playerScore, compScore);
-}
-function getRandInt(max = 3){
-    return Math.floor(Math.random() * max)
-}
-
-function getCompChoice(){
-    let choice = getRandInt();
-    let guess = ['rock', 'paper', 'scissors'];
-    if (choice == 0){
-        return guess[0];
-    } else if (choice == 1){
-        return guess[1];
-    } else if (choice == 2){
-        return guess[2];
-    }
-}
-
-function playRound(playerSelection, computerSelection){
-    if (playerSelection === computerSelection) {       
-        return `its a tie ${playerSelection} and ${computerSelection} are the same`
-    } else if (playerSelection === 'rock' && computerSelection === 'paper'){ 
-        compScore += 1;
-        return `you lose ${computerSelection} beats ${playerSelection}`
-    } else if (playerSelection === 'rock' && computerSelection === 'scissors'){
-        playerScore += 1;
-        return `you win ${playerSelection} beats ${computerSelection}`;
-    } else if (playerSelection === 'paper' && computerSelection === 'rock'){
-        playerScore += 1;
-        return `you win ${playerSelection} beats ${computerSelection}`;
-    } else if (playerSelection === 'paper' && computerSelection === 'scissors'){
-        compScore += 1;
-        return `you lose ${computerSelection} beats ${playerSelection}`;
-    } else if (playerSelection === 'scissors' && computerSelection === 'paper'){
-        playerScore += 1;
-        return `you win ${playerSelection} beats ${computerSelection}`;
-    } else if (playerSelection === 'scissors' && computerSelection ===  'rock'){
-        compScore += 1;
-        return `you lose ${computerSelection} beats ${playerSelection}`; 
-    }    
-}
-
-game();
