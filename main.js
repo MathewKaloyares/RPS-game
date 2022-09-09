@@ -4,18 +4,9 @@ const computerScore = document.querySelector('.computerScoreDisplay')
 let score = 0
 let compScore = 0
 
-function game() {
-    const selectionButtons = document.querySelectorAll('.choiceButtons').forEach(selectionButton => {
-        selectionButton.addEventListener('click', (e) => {
-            const selection = e.target.id 
-            const compGuess = getRandomGuess()
-            const outcome = getResult(selection, compGuess)
-            console.log(selection)
-            console.log(outcome)
-        })
-    })
 
-}
+
+
 const selectionButtons = document.querySelectorAll('.choiceButtons').forEach(selectionButton => {
     selectionButton.addEventListener('click', (e) => {
         const selection = e.target.id 
@@ -23,11 +14,10 @@ const selectionButtons = document.querySelectorAll('.choiceButtons').forEach(sel
         const outcome = getResult(selection, compGuess)
         playerScore.innerHTML = `PlayerScore: ${score}`
         computerScore.innerHTML = `ComputerScore: ${compScore}`
-        console.log(selection)
-        console.log(outcome)
+        isWinner(score, compScore)
     })
 })
-
+    
 
 function getRandomGuess () {
     let result = ''
@@ -48,33 +38,46 @@ function getRandomGuess () {
     }
     return result;
 }
+
 function getResult (selection, compGuess){
+    let selectionsDisplay = document.querySelector('.selectionsDisplay')
     if(selection === compGuess){
-        return 'Its a Draw'
+        selectionsDisplay.innerHTML = `its a draw ${selection} ties ${compGuess}`
+        return score += 0, compScore += 0
     }
     if(selection === "rock" && compGuess === "scissors"){
-        score += 1
-        return `you win ${selection} beats ${compGuess}`
+        selectionsDisplay.innerHTML = `you win ${selection} beats ${compGuess}`
+        return score += 1
     }
     if(selection === "paper" && compGuess === "rock"){
-        score += 1
-        return `you win ${selection} beats ${compGuess}`
+        selectionsDisplay.innerHTML = `you win ${selection} beats ${compGuess}`
+        return score += 1
     }
     if(selection === "scissors" && compGuess === "paper"){
-        score += 1
-        return `you win ${selection} beats ${compGuess}`
+        selectionsDisplay.innerHTML = `you win ${selection} beats ${compGuess}`
+        return score += 1
     }
     if(selection === "rock" && compGuess === "paper"){
-        compScore += 1
-        return `you lose ${compGuess} beats ${selection}`
+        selectionsDisplay.innerHTML = `you lose ${compGuess} beats ${selection}`
+        return compScore += 1
     }
     if(selection === "scissors" && compGuess === "rock"){
-        compScore += 1
-        return `you lose ${compGuess} beats ${selection}`
+        selectionsDisplay.innerHTML = `you lose ${compGuess} beats ${selection}`
+        return compScore += 1
     }
     if(selection === "paper" && compGuess === "scissors"){
-        compScore += 1
-        return `you lose ${compGuess} beats ${selection}`
+        selectionsDisplay.innerHTML = `you lose ${compGuess} beats ${selection}`
+        return compScore += 1
     }
 }
 
+function isWinner (playerScore, computerScore){
+    let win = document.querySelector('.winner')
+    if (playerScore === 5 || computerScore === 5){
+        if(playerScore > computerScore){
+            return win.innerHTML = 'player is the winner'
+        } else {
+            return win.innerHTML = 'computer is the winner'
+        }
+    }
+}

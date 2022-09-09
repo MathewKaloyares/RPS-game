@@ -5,18 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V2 rps-game</title>
+    <link rel="stylesheet" href='style2.css'>
     <script src="main.js" defer ></script>
 </head>
 <body>
-
-    <div class="playerScoreDisplay"><span>PlayerScore: 0</span></div>
-
-    <div class="computerScoreDisplay"><span>ComputerScore: 0</span></div>
-
+    <div class="scoreBoard">
+        <div class="playerScoreDisplay"><span>PlayerScore: 0</span></div>
+        <div class="computerScoreDisplay"><span>ComputerScore: 0</span></div>
+    </div>
+    <h2 class="winner"></h2>
     <div class="choiceButtons">
         <button class="choiceButton" id="rock">@</button>
         <button class="choiceButton" id="paper">#</button>
         <button class="choiceButton" id="scissors">%</button>
     </div>
+    <div class="selectionsDisplay"></div>
 </body>
 </html>
